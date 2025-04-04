@@ -9,7 +9,21 @@ class TranslatorUI:
 
     def __init__(self):
         self.api_handler = api_handler.Apihandler()
-        self.translation_window = translation_window.TranslatorWindow()
+        self.translation_windows = {}
+        self.window_count = 0
+
+    def generate_window(self, pointerpos, text):
+        """Generates a new window for a specific translation"""
+        self.translation_windows[self.window_count] = (
+            translation_window.TranslatorWindow(
+                pointerpos=pointerpos, text=text, wid=self.window_count
+            )
+        )
+        self.window_count += 1
+
+    def remove_window(self):
+        """Removes window"""
+
         # self.startDaemon()
 
     # def startDaemon(self):ç

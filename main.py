@@ -4,6 +4,7 @@ import os
 import time
 import keyboard
 import pyperclip
+import pyautogui
 from src.translator import TranslatorUI
 
 
@@ -24,4 +25,9 @@ if __name__ == "__main__":
             time.sleep(1)
             clipText = copy_to_clipboard_and_read()
 
-            Translator.api_handler.translate_text(clipText)  # Actual translation Part
+            Translation = Translator.api_handler.translate_text(clipText)
+
+            print("TRANSLATION 2: ", Translation)
+            Translator.generate_window(
+                pyautogui.position(), Translation
+            )  # Actual translation Part
