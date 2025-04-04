@@ -1,8 +1,9 @@
 """Translator app"""
 
+import os
+import time
 import keyboard
 import pyperclip
-import time
 from src.translator import TranslatorUI
 
 
@@ -14,26 +15,13 @@ def copy_to_clipboard_and_read():
 
 
 if __name__ == "__main__":
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = (
+        "/home/sapatri/.config/gcloud/application_default_credentials.json"
+    )
     Translator = TranslatorUI()
-
-    hotkeys = ["up", "up", "up"]
-
-    while True:
-        key = keyboard.read_event()
-        if key.name == "ctrl":
-            hotkeys[0] = key.event_type
-            print(hotkeys)
-
-        if key.name == "alt gr":
-            hotkeys[1] = key.event_type
-            print(hotkeys)
-
-        if key.name == "u":
-            hotkeys[2] = key.event_type
-            print(hotkeys)
-
-        if "up" not in hotkeys:
-            hotkeys = ["up", "up", "up"]
-            time.sleep(0.1)
+    while True:  # Check if hotkey is pressed loop
+        if keyboard.is_pressed("ctrl+altgr+u"):
+            time.sleep(1)
             clipText = copy_to_clipboard_and_read()
-            print("Copied Text", clipText)
+
+            Translator.api_handler.translate_text(clipText)  # Actual translation Part

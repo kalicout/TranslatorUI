@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 # Vs code 
 .vscode
+.TranslatorUI.code-workspace
 
 # C extensions
 *.so

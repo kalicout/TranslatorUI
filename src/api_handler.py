@@ -7,5 +7,22 @@ class Apihandler:
     """Class that represents the Api handling"""
 
     def __init__(self):
-        Client = translate_v2.Client()
-        Client.detect_language("shudsuhds")
+        self.client = translate_v2.Client()
+        self.curr_language = None  # Current detected Language
+        self.translation = None  # Current translation
+
+    def translate_text(self, text):
+        """Makes the call for the translation"""
+        self.curr_language = self.client.detect_language(text)
+        print(self.curr_language)
+        print("ORIGINAL: ", text)
+        if self.curr_language != "en":
+            self.translation = self.client.translate(
+                text,
+                source_language=self.curr_language["language"],
+                target_language="en",
+            )
+            print("TRANSLATION: ", self.translation["translatedText"])
+
+    def give_examples(self, text):
+        """generates a bunch of examples for a given word"""
